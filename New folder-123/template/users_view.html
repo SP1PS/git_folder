@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Users</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0; /* Light gray background color */
+        }
+
+        .view_div {
+            width: 80%;
+            background-color: white; /* White background color for the table */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px; /* Add some padding */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="view_div">
+            <table class="table table-hover table-bordered p-3 m-3 bg-powerblue text-dark">  
+                <thead>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Number</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody>
+                    {% for application in applications %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ application.name }}</td>
+                        <td>{{ application.designation }}</td>
+                        <td>{{ application.number }}</td>
+                        <td>{{ application.email }}</td>
+                        <td>
+                            <!-- Edit form -->
+                            <form method="post" action="{% url 'edit_user' application.id %}" style="display: inline-block;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Edit</button>
+                            </form>
+                            <!-- Delete form -->
+                            <form method="post" action="{% url 'delete_user' application.id %}" style="display: inline-block;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
